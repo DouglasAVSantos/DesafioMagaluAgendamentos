@@ -11,17 +11,16 @@ import java.util.List;
 
 @Getter
 @Setter
-@Table
 @Entity
 public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String nome;
     private String email;
     private String celular;
-    @OneToMany(mappedBy = "destinatario")
-    @JsonIgnore
+    @OneToMany(mappedBy = "destinatario",cascade = CascadeType.ALL)
     private List<Agendamento> listaDeAgendamentos;
 
     public Pessoa() {
@@ -29,6 +28,10 @@ public class Pessoa {
 
     public Pessoa(String nome){
         this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }
 
