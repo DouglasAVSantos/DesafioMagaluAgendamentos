@@ -8,38 +8,40 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Map;
 
 @ControllerAdvice
-public class GlobalExceptionHandler{
+public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    ResponseEntity<String> handlerBadResquest(BadRequestExeption e){
-        return ResponseEntity.badRequest().body("Dados Inválidos. Erro: "+e.getMessage());
+    ResponseEntity<Map<String, String>> handlerBadResquest(BadRequestExeption e) {
+        return ResponseEntity.badRequest().body(Map.of("Dados Inválidos. Erro: ", e.getMessage()));
     }
+
     @ExceptionHandler
-    ResponseEntity<String> handlerNotFoundResquest(NotFoundException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não Encontrado. Erro: "+e.getMessage());
+    ResponseEntity<Map<String, String>> handlerNotFoundResquest(NotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Erro: ", e.getMessage()));
     }
+
     @ExceptionHandler
-    public ResponseEntity<String> handleValidationError(MethodArgumentNotValidException e) {
+    public ResponseEntity<Map<String, String>> handleValidationError(MethodArgumentNotValidException e) {
         String mensagem = e.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .findFirst()
-                .map(error -> error.getDefaultMessage())
+                .findFirst().map(c -> c.getDefaultMessage())
                 .orElse("Erro de validação");
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(mensagem);
+                .body(Map.of("Erro: ", mensagem));
     }
 
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    ResponseEntity<String> handlerInternalServerError(Exception e){
-        return ResponseEntity.internalServerError().body("Erro interno do servidor: "+e.getMessage());
+    ResponseEntity<Map<String, String>> handlerInternalServerError(Exception e) {
+        return ResponseEntity.internalServerError().body(Map.of("Erro interno do servidor: ", e.getMessage()));
     }
 
 }

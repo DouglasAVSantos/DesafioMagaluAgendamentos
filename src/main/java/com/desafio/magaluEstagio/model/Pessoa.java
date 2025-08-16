@@ -1,10 +1,7 @@
 package com.desafio.magaluEstagio.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -20,13 +17,13 @@ public class Pessoa {
     private String nome;
     private String email;
     private String celular;
-    @OneToMany(mappedBy = "destinatario",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL)
     private List<Agendamento> listaDeAgendamentos;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome){
+    public Pessoa(String nome) {
         this.nome = nome;
     }
 
