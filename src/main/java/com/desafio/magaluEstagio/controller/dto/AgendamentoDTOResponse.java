@@ -16,7 +16,7 @@ public record AgendamentoDTOResponse(
 
         AgendamentoStatus status,
 
-        TipoComunicacaoEnum comunicacao,
+        TipoComunicacaoEnum tipo,
 
         String destinatario
 ) {

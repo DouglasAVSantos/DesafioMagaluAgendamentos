@@ -1,6 +1,6 @@
 package com.desafio.magaluEstagio.controller;
 
-import com.desafio.magaluEstagio.exception.BadRequestExeption;
+import com.desafio.magaluEstagio.exception.BadRequestException;
 import com.desafio.magaluEstagio.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    ResponseEntity<Map<String, String>> handlerBadResquest(BadRequestExeption e) {
+    ResponseEntity<Map<String, String>> handlerBadResquest(BadRequestException e) {
         return ResponseEntity.badRequest().body(Map.of("Dados Inválidos. Erro: ", e.getMessage()));
     }
 

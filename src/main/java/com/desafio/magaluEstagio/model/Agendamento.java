@@ -24,7 +24,7 @@ public class Agendamento {
     @Enumerated(EnumType.STRING)
     private AgendamentoStatus status = AgendamentoStatus.NOVO;
     @Enumerated(EnumType.STRING)
-    private TipoComunicacaoEnum comunicacao;
+    private TipoComunicacaoEnum tipoComunicacao;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pessoa_id")
     private Pessoa destinatario;
@@ -36,7 +36,7 @@ public class Agendamento {
         this.data = data;
         this.mensagem = msg;
         this.destinatario = destinatario;
-        this.comunicacao = tipo;
+        this.tipoComunicacao = tipo;
         this.status = AgendamentoStatus.NOVO;
     }
 
@@ -44,7 +44,7 @@ public class Agendamento {
         this.data = data;
         this.mensagem = msg;
         this.destinatario = destinatario;
-        this.comunicacao = tipo;
+        this.tipoComunicacao = tipo;
         this.status = status;
     }
 }
