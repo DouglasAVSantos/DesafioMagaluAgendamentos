@@ -1,7 +1,7 @@
-package com.desafio.magaluEstagio.model;
+package com.desafio.magaluAgendamento.model;
 
-import com.desafio.magaluEstagio.enums.AgendamentoStatus;
-import com.desafio.magaluEstagio.enums.TipoComunicacaoEnum;
+import com.desafio.magaluAgendamento.enums.AgendamentoStatus;
+import com.desafio.magaluAgendamento.enums.TipoComunicacaoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

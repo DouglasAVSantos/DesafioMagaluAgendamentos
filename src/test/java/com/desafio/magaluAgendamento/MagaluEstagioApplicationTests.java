@@ -1,4 +1,4 @@
-package com.desafio.magaluEstagio;
+package com.desafio.magaluAgendamento;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

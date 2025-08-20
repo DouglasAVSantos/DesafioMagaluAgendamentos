@@ -1,13 +1,13 @@
-package com.desafio.magaluEstagio.serviceTestes;
+package com.desafio.magaluAgendamento.controllerTestes;
 
-import com.desafio.magaluEstagio.controller.AgendamentoController;
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTORequest;
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTOResponse;
-import com.desafio.magaluEstagio.enums.AgendamentoStatus;
-import com.desafio.magaluEstagio.enums.TipoComunicacaoEnum;
-import com.desafio.magaluEstagio.exception.BadRequestException;
-import com.desafio.magaluEstagio.exception.NotFoundException;
-import com.desafio.magaluEstagio.service.AgendamentoService;
+import com.desafio.magaluAgendamento.controller.AgendamentoController;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTORequest;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTOResponse;
+import com.desafio.magaluAgendamento.enums.AgendamentoStatus;
+import com.desafio.magaluAgendamento.enums.TipoComunicacaoEnum;
+import com.desafio.magaluAgendamento.exception.BadRequestException;
+import com.desafio.magaluAgendamento.exception.NotFoundException;
+import com.desafio.magaluAgendamento.service.AgendamentoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.desafio.magaluEstagio.enums;
+package com.desafio.magaluAgendamento.enums;
 
 public enum AgendamentoStatus {
     NOVO,

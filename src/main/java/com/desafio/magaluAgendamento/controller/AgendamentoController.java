@@ -1,12 +1,11 @@
-package com.desafio.magaluEstagio.controller;
+package com.desafio.magaluAgendamento.controller;
 
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTORequest;
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTOResponse;
-import com.desafio.magaluEstagio.service.AgendamentoService;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTORequest;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTOResponse;
+import com.desafio.magaluAgendamento.service.AgendamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,6 @@ public class AgendamentoController {
     @Operation(description = "Este endpoint é responsável por deletar um agendamento")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Agendamento retornado com sucesso."),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor."),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado."),
             @ApiResponse(responseCode = "400", description = "Campos Inválidos"),
     })
@@ -81,7 +79,6 @@ public class AgendamentoController {
     @Operation(description = "Este endpoint é responsável por deletar um agendamento")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Agendamento deletado com sucesso."),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor."),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado."),
             @ApiResponse(responseCode = "400", description = "Campos Inválidos"),
     })

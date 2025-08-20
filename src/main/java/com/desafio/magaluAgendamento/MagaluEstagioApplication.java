@@ -1,4 +1,4 @@
-package com.desafio.magaluEstagio;
+package com.desafio.magaluAgendamento;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

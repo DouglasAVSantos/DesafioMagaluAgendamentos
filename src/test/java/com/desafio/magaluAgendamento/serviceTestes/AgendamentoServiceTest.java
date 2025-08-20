@@ -1,15 +1,15 @@
-package com.desafio.magaluEstagio.serviceTestes;
+package com.desafio.magaluAgendamento.serviceTestes;
 
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTORequest;
-import com.desafio.magaluEstagio.controller.dto.AgendamentoDTOResponse;
-import com.desafio.magaluEstagio.enums.AgendamentoStatus;
-import com.desafio.magaluEstagio.enums.TipoComunicacaoEnum;
-import com.desafio.magaluEstagio.exception.BadRequestException;
-import com.desafio.magaluEstagio.exception.NotFoundException;
-import com.desafio.magaluEstagio.model.Agendamento;
-import com.desafio.magaluEstagio.model.Pessoa;
-import com.desafio.magaluEstagio.repository.AgendamentoRepository;
-import com.desafio.magaluEstagio.service.AgendamentoService;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTORequest;
+import com.desafio.magaluAgendamento.controller.dto.AgendamentoDTOResponse;
+import com.desafio.magaluAgendamento.enums.AgendamentoStatus;
+import com.desafio.magaluAgendamento.enums.TipoComunicacaoEnum;
+import com.desafio.magaluAgendamento.exception.BadRequestException;
+import com.desafio.magaluAgendamento.exception.NotFoundException;
+import com.desafio.magaluAgendamento.model.Agendamento;
+import com.desafio.magaluAgendamento.model.Pessoa;
+import com.desafio.magaluAgendamento.repository.AgendamentoRepository;
+import com.desafio.magaluAgendamento.service.AgendamentoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

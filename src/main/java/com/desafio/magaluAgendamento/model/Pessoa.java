@@ -1,4 +1,4 @@
-package com.desafio.magaluEstagio.model;
+package com.desafio.magaluAgendamento.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

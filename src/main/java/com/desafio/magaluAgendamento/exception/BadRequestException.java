@@ -1,4 +1,4 @@
-package com.desafio.magaluEstagio.exception;
+package com.desafio.magaluAgendamento.exception;
 
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {

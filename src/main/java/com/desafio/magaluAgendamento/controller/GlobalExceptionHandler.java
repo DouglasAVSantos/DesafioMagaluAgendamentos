@@ -1,13 +1,11 @@
-package com.desafio.magaluEstagio.controller;
+package com.desafio.magaluAgendamento.controller;
 
-import com.desafio.magaluEstagio.exception.BadRequestException;
-import com.desafio.magaluEstagio.exception.NotFoundException;
+import com.desafio.magaluAgendamento.exception.BadRequestException;
+import com.desafio.magaluAgendamento.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Map;
 

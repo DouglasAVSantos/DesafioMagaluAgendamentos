@@ -1,10 +1,8 @@
-package com.desafio.magaluEstagio.repository;
+package com.desafio.magaluAgendamento.repository;
 
-import com.desafio.magaluEstagio.model.Agendamento;
+import com.desafio.magaluAgendamento.model.Agendamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface AgendamentoRepository extends JpaRepository<Agendamento,Long> {
