@@ -5,10 +5,10 @@ import com.desafio.magaluEstagio.controller.dto.AgendamentoDTORequest;
 import com.desafio.magaluEstagio.controller.dto.AgendamentoDTOResponse;
 import com.desafio.magaluEstagio.enums.AgendamentoStatus;
 import com.desafio.magaluEstagio.enums.TipoComunicacaoEnum;
+import com.desafio.magaluEstagio.exception.BadRequestException;
+import com.desafio.magaluEstagio.exception.NotFoundException;
 import com.desafio.magaluEstagio.service.AgendamentoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(AgendamentoController.class)
@@ -39,7 +38,7 @@ public class AgendamentoControllerTeste {
     private AgendamentoDTORequest dtoRequest;
 
     private AgendamentoDTOResponse dtoResponse;
-
+    @Autowired
     private ObjectMapper mapper;
 
     @BeforeEach
@@ -55,22 +54,21 @@ public class AgendamentoControllerTeste {
                 dtoRequest.tipo(),
                 dtoRequest.destinatario()
         );
-        mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @Test
     public void deveDevolverStatusCREATEDquandoChamarCriarAgendamento() throws Exception {
         when(agendamentoService.criarAgendamento(dtoRequest)).thenReturn(dtoResponse);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/agendamento")
+        mockMvc.perform(post("/agendamento")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dtoRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.tipo").value("EMAIL"))
                 .andExpect(jsonPath("$.destinatario").value("Douglas"))
                 .andExpect(jsonPath("$.mensagem").value("Mensagem do teste do controller"));
+
+        verify(agendamentoService, times(1)).criarAgendamento(dtoRequest);
     }
 
     @Test
@@ -78,11 +76,25 @@ public class AgendamentoControllerTeste {
         Long id = 1L;
         when(agendamentoService.buscarAgendamentoPorId(id)).thenReturn(dtoResponse);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/agendamento/{id}",id).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/agendamento/{id}", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tipo").value("EMAIL"))
                 .andExpect(jsonPath("$.destinatario").value("Douglas"))
                 .andExpect(jsonPath("$.mensagem").value("Mensagem do teste do controller"));
+
+        verify(agendamentoService, times(1)).buscarAgendamentoPorId(id);
+    }
+
+    @Test
+    public void deveDevolverStatusNotFoundQuandoChamarBuscarAgendamento() throws Exception {
+        Long id = 1L;
+        when(agendamentoService.buscarAgendamentoPorId(id)).thenThrow(new NotFoundException("não encontrado."));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/agendamento/{id}", id).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.erro").value("não encontrado."));
+
+        verify(agendamentoService, times(1)).buscarAgendamentoPorId(id);
     }
 
     @Test
@@ -90,9 +102,21 @@ public class AgendamentoControllerTeste {
         Long id = 1L;
         doNothing().when(agendamentoService).removerAgendamentoPorId(id);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/agendamento/{id}",id).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/agendamento/{id}", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.mensagem").value("Agendamento de id " + id + " deletado com sucesso."));
+
+        verify(agendamentoService, times(1)).removerAgendamentoPorId(id);
+    }
+
+    @Test
+    public void deveDevolverStatusNotFoundQuandoChamarDeletarAgendamento() throws Exception {
+        Long id = 1L;
+        doThrow(new NotFoundException("não encontrado.")).when(agendamentoService).removerAgendamentoPorId(id);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/agendamento/{id}", id).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.erro").value("não encontrado."));
 
         verify(agendamentoService, times(1)).removerAgendamentoPorId(id);
     }
@@ -122,6 +146,23 @@ public class AgendamentoControllerTeste {
                         .content(mapper.writeValueAsString(lista)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    public void deveDevolverStatusBADREQUESTQuandoChamarCriarAgendamento() throws Exception {
+
+        AgendamentoDTORequest request = new AgendamentoDTORequest(
+                LocalDateTime.now().plusHours(1), null, "mensagem", TipoComunicacaoEnum.EMAIL
+        );
+
+        when(agendamentoService.criarAgendamento(any(AgendamentoDTORequest.class))).thenThrow(new BadRequestException("erro"));
+
+        mockMvc.perform(post("/agendamento").contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.erro").value("erro"));
+
+        verify(agendamentoService, times(1)).criarAgendamento(any(AgendamentoDTORequest.class));
     }
 
 }

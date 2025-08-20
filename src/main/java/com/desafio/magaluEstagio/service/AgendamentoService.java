@@ -53,21 +53,21 @@ public class AgendamentoService {
         return toResponse(agendamento);
     }
 
-    public AgendamentoDTORequest validar(AgendamentoDTORequest dto){
-        if(dto == null){
+    public AgendamentoDTORequest validar(AgendamentoDTORequest dto) {
+        if (dto == null) {
             throw new NotFoundException("Requisição inválida.");
         }
-        if(dto.data() == null){
+        if (dto.data() == null) {
             throw new BadRequestException("A data é obrigatória.");
         }
-        if(dto.data().isBefore(LocalDateTime.now())){
+        if (dto.data().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("A data deve estar no futuro.");
         }
 
-        if(dto.msg() == null || dto.msg().isBlank()){
+        if (dto.msg() == null || dto.msg().isBlank()) {
             throw new BadRequestException("A mensagem é obrigatória.");
         }
-        if(dto.destinatario() == null || dto.destinatario().isBlank()){
+        if (dto.destinatario() == null || dto.destinatario().isBlank()) {
             throw new BadRequestException("O destinatario é obrigatório.");
         }
         return dto;

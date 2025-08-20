@@ -36,7 +36,7 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor"),
             @ApiResponse(responseCode = "400", description = "Campos Inválidos")
     })
-    ResponseEntity<AgendamentoDTOResponse> criarAgendamento(@RequestBody(required = false) @Valid AgendamentoDTORequest dto) {
+    ResponseEntity<AgendamentoDTOResponse> criarAgendamento(@RequestBody(required = false) AgendamentoDTORequest dto) {
         log.info("Tentando Criar o Agendamento...");
         AgendamentoDTOResponse response = agendamentoService.criarAgendamento(dto);
         log.info("Agendamento criado com sucesso");
