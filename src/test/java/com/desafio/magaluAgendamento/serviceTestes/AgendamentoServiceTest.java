@@ -73,7 +73,8 @@ public class AgendamentoServiceTest {
 
     @Test
     public void deveLancarExcecaoQuandoNãoForPassadoDTO() {
-        NotFoundException ex = assertThrows(NotFoundException.class, () -> agendamentoService.criarAgendamento(null));
+        NotFoundException ex = assertThrows(NotFoundException.class, ()
+                -> agendamentoService.criarAgendamento(null));
         assertEquals("Requisição inválida.", ex.getMessage());
     }
 

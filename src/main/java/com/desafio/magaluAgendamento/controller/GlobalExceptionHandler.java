@@ -21,6 +21,4 @@ public class GlobalExceptionHandler {
     ResponseEntity<Map<String, String>> handlerNotFoundResquest(NotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", e.getMessage()));
     }
-
-
 }
